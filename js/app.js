@@ -33,6 +33,8 @@ categorias.forEach(boton=>{
 
         abrirCategoria(categoriaActual);
 
+        cargarGrupos();
+
     });
 
 });
@@ -115,32 +117,3 @@ function obtenerTitulo(nombre){
     }
 
 }
-
-const btnEnsayo =
-    document.getElementById("btnEnsayo");
-
-let modoEnsayo = false;
-
-btnEnsayo.addEventListener("click",()=>{
-
-    modoEnsayo = !modoEnsayo;
-
-    if(modoEnsayo){
-
-        renderTabla(
-
-            cancionesActuales.filter(c=>c.ensayo)
-
-        );
-
-        btnEnsayo.textContent="📖 Ver Todo";
-
-    }else{
-
-        renderTabla(cancionesActuales);
-
-        btnEnsayo.textContent="🎤 Ensayo";
-
-    }
-
-});

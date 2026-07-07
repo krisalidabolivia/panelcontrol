@@ -1,23 +1,86 @@
 const btnImagen = document.getElementById("btnImagen");
 
-btnImagen.addEventListener("click", descargarImagen);
+btnImagen.onclick = exportarImagenCompacta;
 
-function descargarImagen(){
+function exportarImagenCompacta(){
 
-    const tabla = document.querySelector(".tabla");
+    const contenedor = document.getElementById("exportarImagen");
 
-    html2canvas(tabla,{
-        scale:2,
-        backgroundColor:"#0B1220"
-    }).then(canvas=>{
+    let html = `
 
-        const enlace=document.createElement("a");
+    <div class="exportacion">
 
-        enlace.download=`${categoriaActual}.png`;
+        <h1>${tituloRepertorio.textContent}</h1>
 
-        enlace.href=canvas.toDataURL("image/png");
+    `;
 
-        enlace.click();
+    const grupos=[...new Set(cancionesActuales.map(c=>c.grupo||"General"))];
+
+    grupos.forEach(grupo=>{
+
+        html+=`
+
+            <h2>${grupo}</h2>
+
+            <table>
+
+        `;
+
+        cancionesActuales
+
+        .filter(c=>(c.grupo||"General")==grupo)
+
+        .forEach((c,i)=>{
+
+            html+=`
+
+                <tr>
+
+                    <td class="num">
+
+                        ${String(i+1).padStart(2,"0")}
+
+                    </td>
+
+                    <td>
+
+                        ${c.nombre}
+
+                    </td>
+
+                    <td class="tonoExport">
+
+                        ${c.tono}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+        html+=`</table>`;
+
+    });
+
+    html+=`</div>`;
+
+    contenedor.innerHTML=html;
+
+    contenedor.style.display="block";
+
+    html2canvas(contenedor).then(canvas=>{
+
+        const a=document.createElement("a");
+
+        a.download=tituloRepertorio.textContent+".png";
+
+        a.href=canvas.toDataURL();
+
+        a.click();
+
+        contenedor.style.display="none";
 
     });
 

@@ -6,75 +6,107 @@ function renderTabla(canciones){
 
     const contenedor = document.getElementById("listaCanciones");
 
-    contenedor.innerHTML = `
+        let html = `
 
-    <div class="tabla">
+        <div class="tabla">
 
-        <div class="tabla-info">
+            <div class="tabla-info">
 
-            <div>
+                <div class="tabla-titulo">
 
-                <h3>${tituloRepertorio.textContent}</h3>
+                    <h3>${tituloRepertorio.textContent}</h3>
 
-                <span>${canciones.length} canciones</span>
+                    <span>${canciones.length} canciones</span>
+
+                </div>
+
+                <div class="tabla-tools">
+
+                    <input
+                        id="buscarCancion"
+                        type="text"
+                        placeholder="🔍 Buscar canción, artista o tono">
+
+                    <button
+                        class="btnGrupo"
+                        onclick="nuevoGrupo()">
+
+                        ➕ Grupo
+
+                    </button>
+
+                </div>
 
             </div>
 
-            <div class="tabla-tools">
+        `;
 
-                <input
-                    type="text"
-                    placeholder="Buscar próximamente..."
-                    disabled
-                >
+    // Obtener grupos únicos
+    const grupos = [...new Set(canciones.map(c => c.grupo || "General"))];
 
-            </div>
+    grupos.forEach(grupo=>{
+
+        html += `
+
+        <div class="titulo-grupo">
+
+            ${grupo}
 
         </div>
 
         <table>
 
-            <thead>
-
-                <tr>
-
-                    <th width="70">#</th>
-
-                    <th>Canción</th>
-
-                    <th width="120">Tono</th>
-
-                    <th width="120">Acciones</th>
-
-                </tr>
-
-            </thead>
-
             <tbody>
 
-                ${canciones.map((c,i)=>crearFila(c,i)).join("")}
+                ${canciones
+                    .filter(c=>(c.grupo||"General")==grupo)
+                    .map((c, i) => crearFila(c, canciones.indexOf(c), i + 1))
+                    .join("")}
 
             </tbody>
 
         </table>
 
-    </div>
+        `;
 
-    `;
+    });
+
+    html += `</div>`;
+
+    contenedor.innerHTML = html;
+
+    const buscar = document.getElementById("buscarCancion");
+
+    buscar.addEventListener("input", function(){
+
+        const texto = this.value.toLowerCase();
+
+        document.querySelectorAll(".fila-cancion").forEach(fila=>{
+
+            const contenido = fila.innerText.toLowerCase();
+
+            fila.style.display = contenido.includes(texto)
+
+                ? ""
+
+                : "none";
+
+        });
+
+    });
 
 }
-
 //=========================================
 
-function crearFila(c, i){
+function crearFila(c, indiceReal, numeroGrupo){
 
     return `
 
     <tr
         class="fila-cancion"
-        onclick="abrirEditor(${i})"
+        onclick="abrirEditor(${indiceReal})"
         draggable="true"
-        data-index="${i}"
+        data-index="${indiceReal}"
         ondragstart="drag(event)"
         ondragover="allowDrop(event)"
         ondrop="drop(event)">
@@ -83,7 +115,7 @@ function crearFila(c, i){
 
             <span class="numero">
 
-                ${String(c.numero).padStart(2,"0")}
+                ${String(numeroGrupo).padStart(2,"0")}
 
             </span>
 
@@ -117,7 +149,7 @@ function crearFila(c, i){
 
             <button
                 class="btn-set"
-                onclick="event.stopPropagation(); agregarSetlist(${i})">
+                onclick="event.stopPropagation(); agregarSetlist(${indiceReal})">
 
                 +
 
@@ -125,7 +157,7 @@ function crearFila(c, i){
 
             <button
                 class="eliminar"
-                onclick="event.stopPropagation(); eliminarCancion(${i})">
+                onclick="event.stopPropagation(); eliminarCancion(${indiceReal})">
 
                 🗑️
 

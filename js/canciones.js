@@ -160,6 +160,31 @@ ${tonos}
 
 <div class="campo">
 
+    <label>Grupo</label>
+
+    <div class="grupo-editor">
+
+        <select id="grupo">
+
+            ${gruposHTML}
+
+        </select>
+
+        <button
+            type="button"
+            class="btnNuevoGrupo"
+            onclick="nuevoGrupo()">
+
+            ➕
+
+        </button>
+
+    </div>
+
+</div>
+
+<div class="campo">
+
 <label>Letra</label>
 
 <textarea id="letra">${c.letra}</textarea>
@@ -223,6 +248,8 @@ function guardarCancion(){
         tono:document.getElementById("tono").value,
 
         artista:document.getElementById("artista").value.trim(),
+
+        grupo:document.getElementById("grupo").value,
 
         letra:document.getElementById("letra").value,
 
@@ -299,11 +326,11 @@ function eliminarCancion(indice){
 // DRAG & DROP
 //==============================
 
-let origen=null;
+let origen = null;
 
 function drag(e){
 
-    origen=Number(e.currentTarget.dataset.index);
+    origen = Number(e.currentTarget.dataset.index);
 
 }
 
@@ -317,26 +344,23 @@ function drop(e){
 
     e.preventDefault();
 
-    const destino=Number(e.currentTarget.dataset.index);
+    const destino = Number(e.currentTarget.dataset.index);
 
-    if(origen===destino)
+    if(origen === destino)
         return;
 
-    const mover=cancionesActuales.splice(origen,1)[0];
+    const grupoOrigen = cancionesActuales[origen].grupo || "General";
+    const grupoDestino = cancionesActuales[destino].grupo || "General";
+
+    // Si cambió de grupo
+    cancionesActuales[origen].grupo = grupoDestino;
+
+    const mover = cancionesActuales.splice(origen,1)[0];
 
     cancionesActuales.splice(destino,0,mover);
 
-    renumerarCanciones();
-
-}
-
-function renumerarCanciones(){
-
-    cancionesActuales.forEach((c,i)=>{
-
-        c.numero=i+1;
-
-    });
+    renumerarGrupo(grupoOrigen);
+    renumerarGrupo(grupoDestino);
 
     guardarStorage();
 
@@ -344,6 +368,21 @@ function renumerarCanciones(){
 
 }
 
+function renumerarGrupo(nombreGrupo){
+
+    let numero = 1;
+
+    cancionesActuales.forEach(c=>{
+
+        if((c.grupo || "General") === nombreGrupo){
+
+            c.numero = numero++;
+
+        }
+
+    });
+
+}
 //=====================================
 // SETLIST
 //=====================================
@@ -417,5 +456,48 @@ document.getElementById("btnLimpiarSet").onclick=()=>{
     setlist=[];
 
     renderSetlist();
+
+}
+
+//=====================================
+// NUEVO GRUPO
+//=====================================
+
+function nuevoGrupo(){
+
+    const nombre = prompt("Nombre del nuevo grupo:");
+
+    if(!nombre) return;
+
+    if(grupos.includes(nombre)){
+
+        alert("Ese grupo ya existe.");
+        return;
+
+    }
+
+    grupos.push(nombre);
+
+    cerrarEditor();
+
+    abrirEditor(indiceEditar);
+
+    document.getElementById("grupo").value = nombre;
+
+}
+
+function dropGrupo(e){
+
+    e.preventDefault();
+
+    const nuevoGrupo=e.currentTarget.dataset.grupo;
+
+    cancionesActuales[origen].grupo=nuevoGrupo;
+
+    guardarStorage();
+
+    renderTabla(cancionesActuales);
+
+    document.body.classList.remove("dragging");
 
 }
