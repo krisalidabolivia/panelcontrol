@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Repertorio Krisálida</title>
+
+    <link
+        rel="stylesheet"
+        href="css/estilos.css"
+    >
+    <link
+        rel="manifest"
+        href="./manifest.json"
+    >
+
+
+    <meta
+        name="theme-color"
+        content="#28b6ff"
+    >
+
+</head>
+
+<body>
+
+    <div
+        id="estadoConexion"
+        class="estado-conexion conectado"
+    >
+
+        🟢 Conectado — Guardado en la nube
+
+    </div>
+
+<header class="encabezado">
+
+    <div>
+
+        <p class="grupo">
+            AGRUPACIÓN
+        </p>
+
+        <h1>
+            KRISÁLIDA
+        </h1>
+
+        <p>
+            Repertorio musical
+        </p>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- CATEGORÍAS -->
+
+    <section
+        id="vistaCategorias"
+        class="vista"
+    >
+
+        <div class="titulo-seccion">
+
+            <div>
+
+                <span class="subtitulo">
+                    CATÁLOGO MUSICAL
+                </span>
+
+                <h2>
+                    Selecciona un repertorio
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="contenedorCategorias"
+            class="categorias"
+        >
+
+        </div>
+
+    </section>
+
+
+    <!-- REPERTORIO -->
+
+    <section
+        id="vistaRepertorio"
+        class="vista oculto"
+    >
+
+        <button
+            class="boton-volver"
+            onclick="volverCategorias()"
+        >
+
+            ← Volver
+
+        </button>
+
+
+        <div class="cabecera-repertorio">
+
+            <div>
+
+                <span class="subtitulo">
+
+                    REPERTORIO
+
+                </span>
+
+                <h2 id="tituloCategoria">
+
+                </h2>
+
+            </div>
+
+
+            <button
+                class="boton-principal"
+                onclick="abrirSector()"
+            >
+
+                + Crear sector
+
+            </button>
+
+        </div>
+
+
+        <div id="contenedorSectores">
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- MODAL SECTOR -->
+
+<div
+    id="modalSector"
+    class="modal oculto"
+>
+
+    <div class="modal-contenido">
+
+        <button
+            class="cerrar"
+            onclick="cerrarSector()"
+        >
+
+            ×
+
+        </button>
+
+
+        <h2>
+
+            Nuevo sector
+
+        </h2>
+
+
+        <label>
+
+            Nombre del sector
+
+        </label>
+
+
+        <input
+            id="nombreSector"
+            type="text"
+            placeholder="Ejemplo: Morenadas"
+        >
+
+
+        <button
+            class="boton-principal completo"
+            onclick="guardarSector()"
+        >
+
+            Guardar sector
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL CANCIÓN -->
+
+<div
+    id="modalCancion"
+    class="modal oculto"
+>
+
+    <div class="modal-contenido modal-grande">
+
+        <button
+            class="cerrar"
+            onclick="cerrarCancion()"
+        >
+
+            ×
+
+        </button>
+
+
+        <h2 id="tituloFormulario">
+
+            Nueva canción
+
+        </h2>
+
+
+        <div class="formulario">
+
+
+            <div>
+
+                <label>
+
+                    Nombre del tema
+
+                </label>
+
+                <input
+                    id="nombreCancion"
+                    type="text"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+
+                    Autor o artista
+
+                </label>
+
+                <input
+                    id="autorCancion"
+                    type="text"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+
+                    Tonalidad
+
+                </label>
+
+                <input
+                    id="tonoCancion"
+                    type="text"
+                    placeholder="Ejemplo: LA menor"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+
+                    Enlace de YouTube
+
+                </label>
+
+                <input
+                    id="youtubeCancion"
+                    type="url"
+                >
+
+            </div>
+
+
+            <div class="campo-completo">
+
+                <label>
+
+                    Letra completa
+
+                </label>
+
+                <textarea
+                    id="letraCancion"
+                    rows="9"
+                ></textarea>
+
+            </div>
+
+
+            <div class="campo-completo">
+
+                <label>
+
+                    Observaciones
+
+                </label>
+
+                <textarea
+                    id="observacionesCancion"
+                    rows="3"
+                ></textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <button
+            class="boton-principal completo"
+            onclick="guardarCancion()"
+        >
+
+            Guardar canción
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script
+    type="module"
+    src="./js/firebase.js"
+></script>
+
+
+<script
+    src="./js/app.js"
+></script>
+
+<script>
+
+/* =================================
+   ACTIVAR Y ACTUALIZAR PWA
+================================= */
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener(
+
+        "load",
+
+        async ()=>{
+
+            try{
+
+                const registro =
+
+                    await navigator
+                    .serviceWorker
+                    .register(
+
+                        "./service-worker.js",
+
+                        {
+
+                            updateViaCache:"none"
+
+                        }
+
+                    );
+
+
+                /* BUSCAR ACTUALIZACIONES */
+
+                await registro.update();
+
+
+                console.log(
+
+                    "📱 Aplicación actualizada"
+
+                );
+
+            }
+
+            catch(error){
+
+                console.error(
+
+                    "Error PWA:",
+
+                    error
+
+                );
+
+            }
+
+        }
+
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

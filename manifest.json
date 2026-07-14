@@ -1,0 +1,12 @@
+{
+    "name": "Repertorio Krisálida",
+    "short_name": "Krisálida",
+    "description": "Repertorio musical de la Agrupación Krisálida",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "background_color": "#07131f",
+    "theme_color": "#28b6ff",
+    "orientation": "any",
+    "lang": "es"
+}
