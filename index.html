@@ -131,14 +131,38 @@
             </div>
 
 
-            <button
-                class="boton-principal"
-                onclick="abrirSector()"
-            >
+            <div class="acciones-exportar">
 
-                + Crear sector
+                <button
+                    class="boton-exportar"
+                    onclick="descargarImagen()"
+                >
 
-            </button>
+                    🖼 Descargar imagen
+
+                </button>
+
+
+                <button
+                    class="boton-exportar"
+                    onclick="descargarPDF()"
+                >
+
+                    📄 Descargar PDF
+
+                </button>
+
+
+                <button
+                    class="boton-principal"
+                    onclick="abrirSector()"
+                >
+
+                    + Crear sector
+
+                </button>
+
+</div>
 
         </div>
 
@@ -348,6 +372,21 @@
 
 </div>
 
+<div
+    id="repertorioExportar"
+    class="repertorio-exportar"
+>
+
+</div>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+></script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+></script>
 
 <script
     type="module"

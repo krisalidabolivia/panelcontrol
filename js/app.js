@@ -1388,3 +1388,382 @@ setInterval(
 /* COMPROBAR AL ABRIR */
 
 comprobarInternet();
+
+/* =================================
+   CREAR REPERTORIO COMPACTO
+================================= */
+
+function crearRepertorioExportar(){
+
+    const categoria =
+
+        categorias.find(
+
+            item=>
+
+                item.id===categoriaActual
+
+        );
+
+
+    const sectores =
+
+        datos[categoriaActual];
+
+
+    let filas = "";
+
+    let numero = 1;
+
+
+    sectores.forEach(
+
+        (sector,indiceSector)=>{
+
+
+            filas += `
+
+                <tr class="exportar-sector">
+
+                    <td colspan="4">
+
+                        SECTOR
+
+                        ${indiceSector+1}
+
+                        —
+
+                        ${sector.nombre}
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            sector.canciones.forEach(
+
+                cancion=>{
+
+
+                    filas += `
+
+                        <tr>
+
+                            <td class="exportar-numero">
+
+                                ${
+
+                                    String(numero)
+
+                                    .padStart(
+
+                                        2,
+
+                                        "0"
+
+                                    )
+
+                                }
+
+                            </td>
+
+
+                            <td class="exportar-tema">
+
+                                ${cancion.nombre}
+
+                            </td>
+
+
+                            <td class="exportar-artista">
+
+                                ${
+
+                                    cancion.autor
+
+                                    ||
+
+                                    "—"
+
+                                }
+
+                            </td>
+
+
+                            <td class="exportar-tono">
+
+                                ${
+
+                                    cancion.tono
+
+                                    ||
+
+                                    "—"
+
+                                }
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    numero++;
+
+                }
+
+            );
+
+        }
+
+    );
+
+
+    const contenedor =
+
+        document.getElementById(
+
+            "repertorioExportar"
+
+        );
+
+
+    contenedor.innerHTML = `
+
+        <div class="exportar-encabezado">
+
+            <h1>
+
+                AGRUPACIÓN KRISÁLIDA
+
+            </h1>
+
+
+            <h2>
+
+                ${categoria.nombre}
+
+            </h2>
+
+        </div>
+
+
+        <table class="exportar-tabla">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        N°
+
+                    </th>
+
+                    <th>
+
+                        TEMA
+
+                    </th>
+
+                    <th>
+
+                        ARTISTA
+
+                    </th>
+
+                    <th>
+
+                        TONO
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                ${filas}
+
+            </tbody>
+
+        </table>
+
+    `;
+
+
+    return contenedor;
+
+}
+
+
+/* =================================
+   DESCARGAR IMAGEN
+================================= */
+
+async function descargarImagen(){
+
+    const repertorio =
+
+        crearRepertorioExportar();
+
+
+    const canvas =
+
+        await html2canvas(
+
+            repertorio,
+
+            {
+
+                scale:2,
+
+                backgroundColor:
+
+                    "#ffffff"
+
+            }
+
+        );
+
+
+    const enlace =
+
+        document.createElement(
+
+            "a"
+
+        );
+
+
+    enlace.download =
+
+        `Repertorio-${categoriaActual}.png`;
+
+
+    enlace.href =
+
+        canvas.toDataURL(
+
+            "image/png"
+
+        );
+
+
+    enlace.click();
+
+}
+
+
+/* =================================
+   DESCARGAR PDF
+================================= */
+
+async function descargarPDF(){
+
+    const repertorio =
+
+        crearRepertorioExportar();
+
+
+    const canvas =
+
+        await html2canvas(
+
+            repertorio,
+
+            {
+
+                scale:2,
+
+                backgroundColor:
+
+                    "#ffffff"
+
+            }
+
+        );
+
+
+    const imagen =
+
+        canvas.toDataURL(
+
+            "image/jpeg",
+
+            .95
+
+        );
+
+
+    const {
+
+        jsPDF
+
+    } = window.jspdf;
+
+
+    const pdf =
+
+        new jsPDF(
+
+            {
+
+                orientation:
+
+                    "portrait",
+
+                unit:"mm",
+
+                format:"a4"
+
+            }
+
+        );
+
+
+    const ancho = 190;
+
+
+    const alto =
+
+        canvas.height
+
+        *
+
+        ancho
+
+        /
+
+        canvas.width;
+
+
+    pdf.addImage(
+
+        imagen,
+
+        "JPEG",
+
+        10,
+
+        10,
+
+        ancho,
+
+        alto
+
+    );
+
+
+    pdf.save(
+
+        `Repertorio-${categoriaActual}.pdf`
+
+    );
+
+}

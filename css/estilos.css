@@ -897,3 +897,230 @@ textarea:focus{
     }
 
 }
+
+/* =================================
+   BOTONES DE EXPORTACIÓN
+================================= */
+
+.acciones-exportar{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.boton-exportar{
+
+    padding:12px 17px;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.15);
+
+    border-radius:13px;
+
+    color:white;
+
+    background:
+
+        rgba(255,255,255,.08);
+
+}
+
+
+.boton-exportar:hover{
+
+    border-color:
+
+        var(--dorado);
+
+}
+
+
+/* =================================
+   REPERTORIO PARA PDF E IMAGEN
+================================= */
+
+.repertorio-exportar{
+
+    position:fixed;
+
+    top:0;
+
+    left:-10000px;
+
+    width:1000px;
+
+    padding:28px;
+
+    color:#111;
+
+    font-family:
+
+        Arial,
+
+        sans-serif;
+
+    background:white;
+
+}
+
+
+.exportar-encabezado{
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+}
+
+
+.exportar-encabezado h1{
+
+    margin:0;
+
+    color:#0878a8;
+
+    font-size:25px;
+
+    letter-spacing:2px;
+
+}
+
+
+.exportar-encabezado h2{
+
+    margin:
+
+        5px 0;
+
+    color:#222;
+
+    font-size:17px;
+
+}
+
+
+.exportar-tabla{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    table-layout:fixed;
+
+    font-size:11px;
+
+}
+
+
+.exportar-tabla th{
+
+    padding:6px;
+
+    color:white;
+
+    border:
+
+        1px solid
+        #333;
+
+    background:#0878a8;
+
+}
+
+
+.exportar-tabla td{
+
+    padding:5px;
+
+    border:
+
+        1px solid
+        #555;
+
+}
+
+
+.exportar-numero{
+
+    width:45px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+
+.exportar-tema{
+
+    width:48%;
+
+    font-weight:bold;
+
+}
+
+
+.exportar-artista{
+
+    width:30%;
+
+}
+
+
+.exportar-tono{
+
+    width:100px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+}
+
+
+.exportar-sector td{
+
+    padding:7px;
+
+    color:#111;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+    background:#e7bd58;
+
+}
+
+
+@media(
+
+    max-width:700px
+
+){
+
+    .acciones-exportar{
+
+        width:100%;
+
+    }
+
+
+    .acciones-exportar button{
+
+        flex:1;
+
+    }
+
+}
