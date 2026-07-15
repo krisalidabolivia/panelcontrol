@@ -480,7 +480,54 @@ function mostrarSectores(){
                                     ?
 
                                     `
+                                    <button
 
+                                        class="boton-pequeno boton-orden"
+
+                                        onclick="
+
+                                            subirCancion(
+
+                                                ${indiceSector},
+
+                                                ${indice}
+
+                                            )
+
+                                        "
+
+                                        title="Subir canción"
+
+                                    >
+
+                                        ⬆
+
+                                    </button>
+
+
+                                    <button
+
+                                        class="boton-pequeno boton-orden"
+
+                                        onclick="
+
+                                            bajarCancion(
+
+                                                ${indiceSector},
+
+                                                ${indice}
+
+                                            )
+
+                                        "
+
+                                        title="Bajar canción"
+
+                                    >
+
+                                        ⬇
+
+                                    </button>
                                     <button
 
                                         class="boton-pequeno"
@@ -1765,5 +1812,133 @@ async function descargarPDF(){
         `Repertorio-${categoriaActual}.pdf`
 
     );
+
+}
+
+/* =================================
+   CAMBIAR ORDEN DE LAS CANCIONES
+================================= */
+
+
+/* SUBIR CANCIÓN */
+
+function subirCancion(
+
+    indiceSector,
+
+    indiceCancion
+
+){
+
+    const canciones =
+
+        datos[categoriaActual]
+
+        [indiceSector]
+
+        .canciones;
+
+
+    /* YA ESTÁ EN PRIMER LUGAR */
+
+    if(
+
+        indiceCancion===0
+
+    ){
+
+        return;
+
+    }
+
+
+    const cancionActual =
+
+        canciones[indiceCancion];
+
+
+    canciones[indiceCancion] =
+
+        canciones[
+
+            indiceCancion-1
+
+        ];
+
+
+    canciones[
+
+        indiceCancion-1
+
+    ] = cancionActual;
+
+
+    guardarDatos();
+
+    mostrarSectores();
+
+}
+
+
+/* BAJAR CANCIÓN */
+
+function bajarCancion(
+
+    indiceSector,
+
+    indiceCancion
+
+){
+
+    const canciones =
+
+        datos[categoriaActual]
+
+        [indiceSector]
+
+        .canciones;
+
+
+    /* YA ESTÁ EN ÚLTIMO LUGAR */
+
+    if(
+
+        indiceCancion
+
+        ===
+
+        canciones.length-1
+
+    ){
+
+        return;
+
+    }
+
+
+    const cancionActual =
+
+        canciones[indiceCancion];
+
+
+    canciones[indiceCancion] =
+
+        canciones[
+
+            indiceCancion+1
+
+        ];
+
+
+    canciones[
+
+        indiceCancion+1
+
+    ] = cancionActual;
+
+
+    guardarDatos();
+
+    mostrarSectores();
 
 }
