@@ -10,6 +10,17 @@ import {
     onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
+import {
+
+    getAuth,
+
+    signInWithEmailAndPassword,
+
+    signOut,
+
+    onAuthStateChanged
+
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 const firebaseConfig = {
 
@@ -42,6 +53,7 @@ const app = initializeApp(
 
 
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
 const documentoRepertorio = doc(
@@ -161,3 +173,153 @@ window.escucharFirebase = function(
     );
 
 };
+
+/* =================================
+   INICIAR SESIÓN
+================================= */
+
+window.iniciarSesionAdministrador =
+
+async function(){
+
+    const correo =
+
+        document.getElementById(
+
+            "correoLogin"
+
+        ).value.trim();
+
+
+    const contrasena =
+
+        document.getElementById(
+
+            "contrasenaLogin"
+
+        ).value;
+
+
+    const mensaje =
+
+        document.getElementById(
+
+            "mensajeLogin"
+
+        );
+
+
+    mensaje.textContent =
+
+        "Verificando...";
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+
+            auth,
+
+            correo,
+
+            contrasena
+
+        );
+
+
+        mensaje.textContent = "";
+
+    }
+
+    catch(error){
+
+        mensaje.textContent =
+
+            "Correo o contraseña incorrectos.";
+
+    }
+
+};
+
+
+/* =================================
+   MODO INVITADO
+================================= */
+
+window.ingresarComoInvitado =
+
+function(){
+
+    localStorage.setItem(
+
+        "modoKrisalida",
+
+        "invitado"
+
+    );
+
+
+    window.activarModoAplicacion(
+
+        false
+
+    );
+
+};
+
+
+/* =================================
+   CERRAR SESIÓN
+================================= */
+
+window.cerrarSesion =
+
+async function(){
+
+    localStorage.removeItem(
+
+        "modoKrisalida"
+
+    );
+
+
+    await signOut(auth);
+
+
+    location.reload();
+
+};
+
+
+/* =================================
+   COMPROBAR ADMINISTRADOR
+================================= */
+
+onAuthStateChanged(
+
+    auth,
+
+    usuario=>{
+
+        if(usuario){
+
+            localStorage.setItem(
+
+                "modoKrisalida",
+
+                "administrador"
+
+            );
+
+
+            window.activarModoAplicacion(
+
+                true
+
+            );
+
+        }
+
+    }
+
+);

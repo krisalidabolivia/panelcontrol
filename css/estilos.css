@@ -1149,3 +1149,347 @@ textarea:focus{
     background:var(--dorado);
 
 }
+
+/* =================================
+   PANTALLA DE LOGIN
+================================= */
+
+.pantalla-login{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:1000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    overflow:auto;
+
+    background:
+
+        radial-gradient(
+
+            circle at top,
+
+            #174b68,
+
+            #07131f 55%
+
+        );
+
+}
+
+
+.login-tarjeta{
+
+    width:min(
+
+        430px,
+
+        100%
+
+    );
+
+    padding:
+
+        38px 35px;
+
+    text-align:center;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.14);
+
+    border-radius:35px;
+
+    background:
+
+        rgba(15,42,60,.82);
+
+    backdrop-filter:
+
+        blur(25px);
+
+    box-shadow:
+
+        20px 20px 60px
+        rgba(0,0,0,.45),
+
+        inset 1px 1px
+        rgba(255,255,255,.12);
+
+}
+
+
+.login-logo{
+
+    font-size:55px;
+
+    filter:
+
+        drop-shadow(
+
+            0 0 15px
+            rgba(57,191,255,.6)
+
+        );
+
+}
+
+
+.login-grupo{
+
+    margin:
+
+        14px 0 0;
+
+    color:var(--dorado);
+
+    font-size:11px;
+
+    letter-spacing:7px;
+
+}
+
+
+.login-tarjeta h1{
+
+    margin:
+
+        5px 0;
+
+    color:var(--celeste);
+
+    font-size:
+
+        clamp(
+
+            37px,
+
+            9vw,
+
+            52px
+
+        );
+
+    letter-spacing:5px;
+
+    text-shadow:
+
+        0 0 22px
+        rgba(57,191,255,.35);
+
+}
+
+
+.login-descripcion{
+
+    margin:
+
+        0 0 25px;
+
+    color:var(--texto);
+
+}
+
+
+.login-formulario{
+
+    text-align:left;
+
+}
+
+
+.login-formulario input{
+
+    margin-bottom:5px;
+
+}
+
+
+.boton-login{
+
+    width:100%;
+
+    margin-top:20px;
+
+    padding:15px;
+
+    border:0;
+
+    border-radius:15px;
+
+    color:#041723;
+
+    font-weight:bold;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--celeste),
+
+            #99e5ff
+
+        );
+
+}
+
+
+.boton-login:hover{
+
+    transform:
+
+        translateY(-2px);
+
+}
+
+
+.separador-login{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    margin:
+
+        23px 0;
+
+}
+
+
+.separador-login span{
+
+    width:100%;
+
+    height:1px;
+
+    background:
+
+        rgba(255,255,255,.13);
+
+}
+
+
+.separador-login p{
+
+    margin:0;
+
+    color:var(--texto);
+
+    font-size:11px;
+
+}
+
+
+.boton-invitado{
+
+    width:100%;
+
+    padding:14px;
+
+    border:
+
+        1px solid
+        rgba(231,189,88,.45);
+
+    border-radius:15px;
+
+    color:var(--dorado);
+
+    font-weight:bold;
+
+    background:
+
+        rgba(231,189,88,.08);
+
+}
+
+
+.texto-invitado{
+
+    margin:
+
+        15px 0 0;
+
+    color:var(--texto);
+
+    font-size:12px;
+
+    line-height:1.5;
+
+}
+
+
+.mensaje-login{
+
+    min-height:17px;
+
+    margin:
+
+        10px 0 0;
+
+    color:#ff9ca6;
+
+    font-size:12px;
+
+}
+
+/* =================================
+   PERMISOS DEL INVITADO
+================================= */
+
+.modo-invitado
+.boton-principal{
+
+    display:none;
+
+}
+
+
+.modo-invitado
+.boton-orden{
+
+    display:none;
+
+}
+
+
+.modo-invitado
+.eliminar{
+
+    display:none;
+
+}
+
+
+/* Oculta editar canción y sector */
+
+.modo-invitado
+.boton-editar{
+
+    display:none;
+
+}
+
+/* =================================
+   OCULTAR FUNCIONES DE ADMINISTRADOR
+================================= */
+
+.modo-invitado .solo-admin{
+
+    display:none !important;
+
+}

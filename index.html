@@ -31,6 +31,120 @@
 
 <body>
 
+    <!-- =================================
+         PANTALLA DE ACCESO
+    ================================= -->
+
+    <section
+        id="pantallaLogin"
+        class="pantalla-login"
+    >
+
+        <div class="login-tarjeta">
+
+            <div class="login-logo">
+
+                🦋
+
+            </div>
+
+            <p class="login-grupo">
+
+                AGRUPACIÓN
+
+            </p>
+
+            <h1>
+
+                KRISÁLIDA
+
+            </h1>
+
+            <p class="login-descripcion">
+
+                Repertorio musical
+
+            </p>
+
+
+            <div class="login-formulario">
+
+                <label>
+
+                    Correo del administrador
+
+                </label>
+
+                <input
+                    id="correoLogin"
+                    type="email"
+                    placeholder="correo@ejemplo.com"
+                >
+
+
+                <label>
+
+                    Contraseña
+
+                </label>
+
+                <input
+                    id="contrasenaLogin"
+                    type="password"
+                    placeholder="••••••••"
+                >
+
+
+                <p
+                    id="mensajeLogin"
+                    class="mensaje-login"
+                ></p>
+
+
+                <button
+                    class="boton-login"
+                    onclick="iniciarSesionAdministrador()"
+                >
+
+                    🔐 Ingresar como administrador
+
+                </button>
+
+            </div>
+
+
+            <div class="separador-login">
+
+                <span></span>
+
+                <p>O</p>
+
+                <span></span>
+
+            </div>
+
+
+            <button
+                class="boton-invitado"
+                onclick="ingresarComoInvitado()"
+            >
+
+                👁 Ingresar sin cuenta
+
+            </button>
+
+
+            <p class="texto-invitado">
+
+                Podrás ver repertorios, letras,
+                tonalidades y videos.
+
+            </p>
+
+    </div>
+
+    </section>
+
     <div
         id="estadoConexion"
         class="estado-conexion conectado"
@@ -39,6 +153,11 @@
         🟢 Conectado — Guardado en la nube
 
     </div>
+
+<div
+    id="contenidoAplicacion"
+    class="oculto"
+>
 
 <header class="encabezado">
 
@@ -174,6 +293,7 @@
     </section>
 
 </main>
+</div>
 
 
 <!-- MODAL SECTOR -->

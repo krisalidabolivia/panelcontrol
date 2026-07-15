@@ -600,7 +600,7 @@ function mostrarSectores(){
 
                                 <button
 
-                                    class="boton-pequeno"
+                                    class="boton-pequeno boton-editar"
 
                                     onclick="
 
@@ -695,7 +695,7 @@ function mostrarSectores(){
 
                             <button
 
-                                class="boton-pequeno"
+                                class="boton-pequeno solo-admin"
 
                                 onclick="
 
@@ -1940,5 +1940,91 @@ function bajarCancion(
     guardarDatos();
 
     mostrarSectores();
+
+}
+
+/* =================================
+   ADMINISTRADOR E INVITADO
+================================= */
+
+let esAdministrador = false;
+
+
+window.activarModoAplicacion =
+
+function(
+
+    administrador
+
+){
+
+    esAdministrador =
+
+        administrador;
+
+
+    document.getElementById(
+
+        "pantallaLogin"
+
+    ).classList.add(
+
+        "oculto"
+
+    );
+
+
+    document.getElementById(
+
+        "contenidoAplicacion"
+
+    ).classList.remove(
+
+        "oculto"
+
+    );
+
+
+    aplicarPermisos();
+
+};
+
+
+/* OCULTAR BOTONES DE EDICIÓN */
+
+function aplicarPermisos(){
+
+    document.body.classList.toggle(
+
+        "modo-invitado",
+
+        !esAdministrador
+
+    );
+
+}
+
+
+/* RECORDAR MODO INVITADO */
+
+if(
+
+    localStorage.getItem(
+
+        "modoKrisalida"
+
+    )
+
+    ===
+
+    "invitado"
+
+){
+
+    activarModoAplicacion(
+
+        false
+
+    );
 
 }
